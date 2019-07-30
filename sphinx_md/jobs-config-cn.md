@@ -4,9 +4,9 @@
 
 这里我们用 Oracle 作为示例演示。
 
-### 1.1 仪表板
+### 1.1 任务列表
 
-“仪表板”页面是启动 Tapdata Replicate 时打开的默认视图，如下图所示。它列出了您定义的所有复制作业。您可以使用此视图查看，编辑，运行和删除作业，或创建新作业。
+“任务列表”页面如下图所示。它列出了您定义的所有复制作业。您可以使用此视图查看，编辑，运行和删除作业，或创建新作业。
 
 ![](../images/jobs-config-cn-1.png)
 
@@ -34,17 +34,17 @@
 
 选择要将表复制到NoSQL数据库的方式。目前支持两种选择：
 
-- 数据库克隆
+- 克隆数据库
 
 如果要将关系数据库按原样克隆到MongoDB，请选择此模式。例如，如果Oracle数据库中有10个表，那么在复制之后，MongoDB中将有10个完全相同的数据结构的集合。
 
-- 自定义
+- 自定义同步
 
 如果要执行模型转换，请选择此选项，例如将多个表中的数据合并到一个JSON集合中。
 
 #### 1.2.3 选择源连接
 
-选择源连接作为复制源。您可以在[管理连接](connection-config-cn.md)页面上创建或管理连接。
+选择源连接作为复制源。您可以在[连接配置](connection-config-cn.md)页面上创建或管理连接。
 
 #### 1.2.4 编辑映射
 
@@ -53,7 +53,7 @@
 
 #### 1.2.5 选择目标连接
 
-选择目标连接作为复制目标。您可以在[管理连接](connection-config-cn.md)页面上创建或管理连接。
+选择目标连接作为复制目标。您可以在[连接配置](connection-config-cn.md)页面上创建或管理连接。
 
 
 ### 1.3 Mapping 设计器
@@ -125,9 +125,9 @@
 
 数组可用于建模1：N关系，例如，订单可能有多个订单行项目。
 
-##### 1.4.1.3 独特的钥匙
+##### 1.4.1.3 唯一键
 
-指定标识表中每行的唯一键。在大多数情况下，这与关系表中的主键列相同。 Tapdata需要此信息才能在目标集合中查找相应的JSON以执行更新操作。
+指定源表中每行的唯一键。在大多数情况下，这与关系表中的主键列相同。 Tapdata需要此信息才能在目标集合中查找相应的JSON以执行更新操作。
 
 您应该提供唯一键，否则Tapdata可能会将所有列用作唯一键。使用所有列都会影响性能。
 
@@ -187,11 +187,11 @@ SELECT * FROM ORDERS WHERE LAST_UPDATED_TIME > TO_DATE('${OFFSET1}');
 
 #### 1.6.1 同步类型
 
-初始同步：在此模式下，Tapdata只会从源数据库中读取当前数据。一旦读取所有数据并将其复制到目标系统，作业将停止。
+Initial Sync（初始化同步）：在此模式下，Tapdata 只会从源数据库中读取当前数据。一旦读取所有数据并将其复制到目标系统，作业将停止。
 
-CDC：在此模式下，Tapdata将不断读取和解析源数据库的事务日志文件，并将每个更改复制到目标系统。作业将继续运行，直到停止。
+CDC（增量同步）：在此模式下，Tapdata 将不断读取和解析源数据库的事务日志文件，并将每个更改复制到目标系统。作业将继续运行，直到停止。
 
-initial sync+cdc：在此模式下，Tapdata将首先执行初始同步。初始同步后，Tapdata将切换到CDC模式以继续将更改的操作从源复制到目标。
+Initial Sync + CDC（初始化同步 + 增量同步）：在此模式下，Tapdata 将首先执行初始同步。初始同步后，Tapdata 将切换到 CDC 模式以继续将更改的操作从源复制到目标。
 
 #### 1.6.2 同步点
 
@@ -209,17 +209,17 @@ initial sync+cdc：在此模式下，Tapdata将首先执行初始同步。初始
 
 ### 2.1 采集二进制文件到 MongoDB的GridFS 中
 
-创建一个任务，将文件从指定目录采集到mongodb中。
+创建一个任务，将文件从指定目录采集到 mongodb 中。
 
-1. 创建一个源端连接 ”File(s)“，您可以参考 [配置连接](connection-config-cn.md)
+1. 创建一个源端连接 ”File(s)“，您可以参考 [连接配置](connection-config-cn.md)
 
-2. 创建一个目标端连接 “GridFS”，您可以参考 [配置连接](connection-config-cn.md)
+2. 创建一个目标端连接 “GridFS”，您可以参考 [连接配置](connection-config-cn.md)
 
 3. 创建一个任务，源端选择第一步创建的连接，目标端选择第二步创建的连接。
 
 **注意：** Files 作为源端的时候是不允许将“同步模式”设置为“Custom”的，只能设置“Database Clone”。
 
-**注意：**源端 Files 中，您需要明确该连接同步的文件类型包括哪些，比如 Excel、CSV、Json、XML，文件类型的获取可以通过创建 Files 连接时的文件名正则表达式去匹配获取。
+**注意：** 源端 Files 中，您需要明确该连接同步的文件类型包括哪些，比如 Excel、CSV、Json、XML，文件类型的获取可以通过创建 Files 连接时的文件名正则表达式去匹配获取。
 
 在 GridFS 的目标端配置时，同样也需要明确本次创建的GridFS和哪个 Files 组合。
 
@@ -247,15 +247,15 @@ initial sync+cdc：在此模式下，Tapdata将首先执行初始同步。初始
 
 ## 3. 企业上云， Local MongoDB 到 Atlas
 
-本文档提供有关从源mongodb集群迁移到Atlas的步骤。
+本文档提供有关从源 MongoDB 集群迁移到 Atlas 的步骤。
 
-1. 使用mongodump转储源mongodb数据。
+1. 使用 mongodump 导出源 MongoDB 数据。
 
     ```
     mongodump --host <IP>：<PORT> --username <USERNAME> --password <PASSWORD> --authenticationDatabase admin --db <DATABASE>
     ```
 
-2. 使用mongorestore将数据恢复到Atlas。可以在截图中找到此命令。
+2. 使用 mongorestore 将数据导入到 Atlas。可以在截图中找到此命令。
 
     ```
     mongorestore --host <ATLAS HOST> --ssl --username <USERNAME> --password <PASSWORD> --authenticationDatabase admin
@@ -267,7 +267,7 @@ initial sync+cdc：在此模式下，Tapdata将首先执行初始同步。初始
 
 3. 记下您的目标 MongoDB 最后记录日期时间，稍后将使用它
 
-4. 找到一台以访问mongo源集群的 EC2 机器
+4. 找到一台以访问 mongo 源集群的 EC2 机器
 
 5. 在 EC2 计算机上安装 jdk8 , [https://gist.github.com/rtfpessoa/17752cbf7156bdf32c59](https://gist.github.com/rtfpessoa/17752cbf7156bdf32c59)。
 
@@ -275,7 +275,7 @@ initial sync+cdc：在此模式下，Tapdata将首先执行初始同步。初始
 
 7. 下载 Tapdata 代理并复制到 EC2 实例
 
-    1. 按照屏幕上的说明配置 Tapdata 代理
+    1. 按照页面上的说明配置 Tapdata 代理
 
     2. 启动代理
 
@@ -295,7 +295,7 @@ initial sync+cdc：在此模式下，Tapdata将首先执行初始同步。初始
 
     4. 单击作业设置上的齿轮图标
 
-        1. 选择CDC，因为您已通过 mongorestore 还原整个数据库，所以可以直接复制增量数据。
+        1. 选择 CDC，因为您已通过 mongorestore 还原整个数据库，所以可以直接复制增量数据。
 
         2. 选择“SYNC TIME”，选择"步骤3 datetime"。为确保数据的一致性，您可以提前一天设置日期，Tapdata 支持幂等，这样您就不必担心数据质量问题。
 

@@ -154,7 +154,7 @@ Oracle 实时同步基于Oracle Redo Log，因此需要提前执行某些配置�
 
 - 以具有 DBA 权限的用户身份登录数据库
 - 查看数据库的 logging mode :`select log_mode from v$database;`
-- 如果返回的结果是 ARCHIVELOG , 您可以直接跳到6.2。
+- 如果返回的结果是 ARCHIVELOG , 您可以直接跳到2.2。
 - 如果返回的结果是 NOARCHIVELOG , 继续按照以下步骤操作:
 - 关闭数据库: `shutdown immediate;`
 - 启动并挂载数据库: `startup mount;`
@@ -288,30 +288,30 @@ select resource_name, limit from dba_profiles where profile=( select profile fro
 
 1. 修改 $MYSQL_HOME/mysql.cnf , 例如:
 
-```
-server-id         = 223344
-log_bin           = mysql-bin
-expire_logs_days  = 1
-binlog_format     = row
-```
+    ```
+    server-id         = 223344
+    log_bin           = mysql-bin
+    expire_logs_days  = 1
+    binlog_format     = row
+    ```
 
-注意：
-- server-id: 对于 MySQL 中的每个服务器和复制客户端必须是唯一的
-- binlog_format：必须设置为row 或者 ROW
-- expire_logs_days：二进制日志文件保留的天数，到期会自动删除。
-- log_bin：binlog 序列文件的基本名称
+    注意：
+    - server-id: 对于 MySQL 中的每个服务器和复制客户端必须是唯一的
+    - binlog_format：必须设置为row 或者 ROW
+    - expire_logs_days：二进制日志文件保留的天数，到期会自动删除。
+    - log_bin：binlog 序列文件的基本名称
 
 2. 重启 MySQL
 
-```
-/etc/inint.d/mysqld restart
-```
+    ```
+    /etc/inint.d/mysqld restart
+    ```
 
 3. 要验证 binlog 已启用，请在 mysql shell 执行以下命令
 
-```
-show variables like 'binlog_format';
-```
+    ```
+    show variables like 'binlog_format';
+    ```
 
 输出的结果中，format value 应该是"ROW"
 

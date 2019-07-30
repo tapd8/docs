@@ -88,27 +88,27 @@
 
 1. 在初始同步分片群集之前需要手动操作
 
-这适用于MongoDB  -  MongoDB复制。
+    这适用于MongoDB  -  MongoDB复制。
 
-为了提高初始同步速度，Tapdata直接连接到每个分片以执行初始同步。这可能导致孤立的文档被复制到目标集群。要防止复制孤立文档，可以在开始复制作业之前执行以下任务：
+    为了提高初始同步速度，Tapdata直接连接到每个分片以执行初始同步。这可能导致孤立的文档被复制到目标集群。要防止复制孤立文档，可以在开始复制作业之前执行以下任务：
 
-- 停止平衡器。请参阅https://docs.mongodb.com/manual/reference/method/sh.stopBalancer/
-- 清理孤立的文档。请参阅https://docs.mongodb.com/manual/reference/command/cleanupOrphaned/
+    - 停止平衡器。请参阅https://docs.mongodb.com/manual/reference/method/sh.stopBalancer/
+    - 清理孤立的文档。请参阅https://docs.mongodb.com/manual/reference/command/cleanupOrphaned/
 
 2. 不使用自定义SQL时，无法在中断时恢复初始同步
 
-虽然Tapdata通常可以在作业停止或中断后恢复复制，但如果未使用自定义SQL，则无法恢复初始同步。如果由于某种原因在初始同步阶段停止了作业，则在重新启动时，Tapdata将从开始读取源数据库中的数据。
+    虽然Tapdata通常可以在作业停止或中断后恢复复制，但如果未使用自定义SQL，则无法恢复初始同步。如果由于某种原因在初始同步阶段停止了作业，则在重新启动时，Tapdata将从开始读取源数据库中的数据。
 
 3. 不使用自定义SQL时，无法恢复初始同步
 
-将复制作业从关系数据库运行到MongoDB时，如果作业在初始加载期间中断，则Tapdata将在作业重新启动时从头开始。
+    将复制作业从关系数据库运行到MongoDB时，如果作业在初始加载期间中断，则Tapdata将在作业重新启动时从头开始。
 
-例外情况是，如果您使用自定义SQL从关系数据库加载数据。在这种情况下，作业可能能够从被中断的点恢复。
+    例外情况是，如果您使用自定义SQL从关系数据库加载数据。在这种情况下，作业可能能够从被中断的点恢复。
 
 4. 在源数据库上执行DDL操作之前暂停作业。
 
-CDC复制期间尚不支持Oracle / MySQL / SQLServer DDL操作。在运行DDL操作（例如drop table，alter table等）之前，请务必先停止复制作业。您可以在DDL操作完成后恢复作业。
+    CDC复制期间尚不支持Oracle / MySQL / SQLServer DDL操作。在运行DDL操作（例如drop table，alter table等）之前，请务必先停止复制作业。您可以在DDL操作完成后恢复作业。
 
 5. DEV-1013：当存在没有主键的表时，复制进度可能无法正常工作
 
-没有主键的表不会在数据库克隆模式下复制。发生这种情况时，复制进度可能一直显示源和目标之间的存在延迟。
+    没有主键的表不会在数据库克隆模式下复制。发生这种情况时，复制进度可能一直显示源和目标之间的存在延迟。
