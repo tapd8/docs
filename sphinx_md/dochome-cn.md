@@ -2,7 +2,7 @@
 
 ## 1. Tapdata 简介
 
-Tapdata Replicator是一种混合数据库复制产品。它旨在提供不同类型的数据库之间的实时数据库更改复制。例如，您可以将数据从Oracle复制到MongoDB，或从MySQL复制到Elastic Search等。此外，Tapdata还可用于在两个MongoDB集群之间复制数据。
+Tapdata Replicator 是一种混合数据库复制产品。它旨在提供不同类型的数据库之间的实时数据库更改复制。例如，您可以将数据从 Oracle 复制到 MongoDB，或从 MySQL 复制到 Elastic Search 等。此外，Tapdata 还可用于在两个 MongoDB 集群之间复制数据。
 
 
 

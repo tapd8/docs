@@ -12,15 +12,15 @@ MongoDB 3.2, 3.4, 3.6, 4.0
 
 #### 1.1.2 基本配置
 
-- 源MongoDB必须是复制集或者集群分片。
-- 如果您的源MongoDB只有一个节点，您可以将其配置为单成员的复制集，以开启oplog功能。
-- 您应该配置足够的oplog空间。 我们建议至少足以容纳24小时的oplog。
+- 源 MongoDB 必须是复制集或者集群分片。
+- 如果您的源 MongoDB 只有一个节点，您可以将其配置为单成员的复制集，以开启 oplog 功能。
+- 您应该配置足够的 oplog 空间。 我们建议至少足以容纳 24 小时的 oplog。
 
 #### 1.1.3 用户帐户权限要求
 
-如果源MongoDB启用了安全身份验证，则Tapdata用于连接源MongoDB的用户帐户必须具有分配给用户的以下内置角色：
+如果源 MongoDB 启用了安全身份验证，则 Tapdata 用于连接源 MongoDB 的用户帐户必须具有分配给用户的以下内置角色：
 
-- clusterMonitor（读取oplog的条件）
+- clusterMonitor（读取 oplog 的条件）
 - readAnyDatabase
 
 要创建具有上述权限的用户，您可以参考以下示例：
@@ -87,13 +87,13 @@ MongoDB 3.2, 3.4, 3.6, 4.0
 
 #### 1.2.2 基本配置
 
-- 目标MongoDB必须是复制集或者集群分片。
-- 如果您的源MongoDB只有一个节点，您可以将其配置为单成员的复制集，以开启oplog功能。这是数据验证功能所需要的。
-- 确保为目标MongoDB配置了足够的资源来处理源数据库的工作负载。
+- 目标 MongoDB 必须是复制集或者集群分片。
+- 如果您的源 MongoDB 只有一个节点，您可以将其配置为单成员的复制集，以开启 oplog 功能。这是数据验证功能所需要的。
+- 确保为目标 MongoDB 配置了足够的资源来处理源数据库的工作负载。
 
 #### 1.2.3 用户帐户权限要求
 
-如果目标MongoDB启用了安全身份验证，则Tapdata使用的用户帐户必须具有以下角色 / 权限：
+如果目标 MongoDB 启用了安全身份验证，则 Tapdata 使用的用户帐户必须具有以下角色 / 权限：
 - clusterMonitor（数据验证功能需要使用）
 - readWrite（作为目标数据库需要拥有的角色）
 
@@ -268,7 +268,7 @@ ALTER SYSTEM SWITCH LOGFILE;
 
 connect_time 参数将自动断开超时的会话。 默认情况下，它是无限的。
 
-设置此设置后，Tapdata的实时同步可能无法正常工作。 要检查设置的值，可以使用以下命令：
+设置此设置后，Tapdata 的实时同步可能无法正常工作。 要检查设置的值，可以使用以下命令：
 ```
 select resource_name, limit from dba_profiles where profile=( select profile from dba_users where username = '<username>');
 ```

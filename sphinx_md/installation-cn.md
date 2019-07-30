@@ -2,9 +2,9 @@
 
 ## 1. 准备
 
-- Chrome浏览器
+- Chrome 浏览器
 
-Tapdata目前仅在Google Chrome浏览器上进行测试。我们建议使用51.0.2704或更高版本。
+Tapdata 目前仅在 Google Chrome 浏览器上进行测试。我们建议使用 51.0.2704 或更高版本。
 
 - Java 1.8
 
@@ -26,7 +26,7 @@ Tapdata目前仅在Google Chrome浏览器上进行测试。我们建议使用51.
 
 ## 2. 安装 Cloud Tapdata
 
-您可以访问我们的网站 [http://cloud.tapdata.io](http://cloud.tapdata.io) 登录并获取Tapdata云版的下载链接，该版本一次仅限于1个正在运行的作业。
+您可以访问我们的网站 [http://cloud.tapdata.io](http://cloud.tapdata.io) 登录并获取 Tapdata 云版的下载链接，该版本一次仅限于1个正在运行的作业。
 
 您也可以联系我们获取无限制的作业版本。我们的邮箱是：**team@tapdata.io**
 
@@ -113,16 +113,16 @@ http://您的服务器:3030/
 
 ## 4. Docker版本安装
 
-1. 假设您已经下载了Tapdata的docker镜像（tapdata-image.tar）
+1. 假设您已经下载了 Tapdata 的 docker 镜像（tapdata-image.tar）
 
 
-2. 执行以下命令加载docker镜像：
+2. 执行以下命令加载 docker 镜像：
 
 ```
 docker load < /home/tapdata-image-name.tar
 ```
 
-3. 使用以下命令启动docker镜像：
+3. 使用以下命令启动 docker 镜像：
 
 ```
 docker run -itd -p 80:80 tapdata:xxx.xxx.xx
