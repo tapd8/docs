@@ -1,1 +1,3 @@
-$('table.docutils').addClass("table table-bordered table-hover")
+$(function () {
+    $('table.docutils').addClass("table table-bordered table-hover")
+})
