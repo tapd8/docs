@@ -92,8 +92,8 @@
 
     为了提高初始同步速度，Tapdata直接连接到每个分片以执行初始同步。这可能导致孤立的文档被复制到目标集群。要防止复制孤立文档，可以在开始复制作业之前执行以下任务：
 
-    - 停止平衡器。请参阅https://docs.mongodb.com/manual/reference/method/sh.stopBalancer/
-    - 清理孤立的文档。请参阅https://docs.mongodb.com/manual/reference/command/cleanupOrphaned/
+    - 停止平衡器。请参阅 [https://docs.mongodb.com/manual/reference/method/sh.stopBalancer/](https://docs.mongodb.com/manual/reference/method/sh.stopBalancer/)
+    - 清理孤立的文档。请参阅 [https://docs.mongodb.com/manual/reference/command/cleanupOrphaned/](https://docs.mongodb.com/manual/reference/command/cleanupOrphaned/)
 
 2. 不使用自定义SQL时，无法在中断时恢复初始同步
 
