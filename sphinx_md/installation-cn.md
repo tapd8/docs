@@ -12,7 +12,7 @@ Tapdata 目前仅在 Google Chrome 浏览器上进行测试。我们建议使用
     
 - MongoDB 3.6
 
-运行安装了 MongoDB 3.6 或更高版本的命令 `mongod --version` 服务器
+运行安装了 MongoDB 3.6 或更高版本的服务器命令 `mongod --version` 
 
 请务必保证 MongoDB 采用了副本集架构
 
@@ -76,6 +76,7 @@ Access Code 可以通过点击顶部的邮件进入个人中心界面，在这�
     ./tapdata start
     ```
     
+
 首次安装需要根据提示框输入一些必要信息。
 
 ```
