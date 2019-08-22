@@ -6,7 +6,7 @@
 
 | 特性 | 描述 | 备注 |
 | -------- | -------- | ------ |
-| Oracle | 支持的数据库版本有：10g, 11g, 12c | - 源库DDL操作不支持（新建表、修改表结构、创建索引） <br> Oracle 10g版本不支持增量同步 <br> - 不支持的数据种类： <br>   - INTERVAL YEAR TO MONTH <br>   - INTERVAL DAY TO SECOND <br>   - RAW <br>   - LONG RAW <br>   - BFILE <br>   - Object refs <br>   - XMLTYPE <br>   - Collections (nested tables and VARRAYs) <br>   - Simple and nested abstract datatypes (ADTs) <br> - 数据库引擎： <br>   - Tables using table compression |
+| Oracle | 支持的数据库版本有：10g, 11g, 12c | - 源库DDL操作不支持（新建表、修改表结构、创建索引） <br> - Oracle 10g版本不支持增量同步 <br> - 不支持的数据种类： <br> nbsp;nbsp; - INTERVAL YEAR TO MONTH <br> nbsp;nbsp; - INTERVAL DAY TO SECOND <br> nbsp;nbsp; - RAW <br> nbsp;nbsp; - LONG RAW <br> nbsp;nbsp; - BFILE <br> nbsp;nbsp; - Object refs <br> nbsp;nbsp; - XMLTYPE <br> nbsp;nbsp; - Collections (nested tables and VARRAYs) <br> nbsp;nbsp; - Simple and nested abstract datatypes (ADTs) <br> - 数据库引擎： <br> nbsp;nbsp; - Tables using table compression |
 | MySQL | 支持的数据库版本有：5.5, 5.6, 5.7 | - 源库DDL操作不支持（新建表、修改表结构、创建索引） |
 | SQL Server | 支持的数据库版本有：2008, 2012, 2016 | - 源库DDL操作不支持（新建表、修改表结构、创建索引） |
 | Sybase | 支持的数据库版本有：15.7 ASE | - 源库DDL操作不支持（新建表、修改表结构、创建索引） |
