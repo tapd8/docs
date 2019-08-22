@@ -2,21 +2,15 @@
 
 ## 数据采集
 
+### 具备数据源为数据库的数据采集能力
 
 | 特性 | 描述 | 备注 |
 | -------- | -------- | ------ |
-| 具备数据源为数据库的数据采集能力 | 支持的数据库种类有：
-    - Oracle 10g，Oracle 11g，Oracle 12C
-    - MySQL：
-    - SQL Server
-    - Sybase
-    - MongoDB | 暂不支持：
-    - 源库DDL操作不支持（新建表、修改表结构、创建索引）
-    - Oracle 10g版本不支持增量同步 |
-| MySQL：  | string | 必须 |
-| SQL Server | string | 必须 |
-| Sybase | string | 必须 |
-| MongoDB | string | 必须 |
+| Oracle | 支持的数据库版本有：10g, 11g, 12c | - 源库DDL操作不支持（新建表、修改表结构、创建索引） \n Oracle 10g版本不支持增量同步 \n - 不支持的数据种类： \n   - INTERVAL YEAR TO MONTH \n   - INTERVAL DAY TO SECOND \n   - RAW \n   - LONG RAW \n   - BFILE \n   - Object refs \n   - XMLTYPE \n   - Collections (nested tables and VARRAYs) \n   - Simple and nested abstract datatypes (ADTs) \n - 数据库引擎： \n   - Tables using table compression |
+| MySQL | 支持的数据库版本有：5.5, 5.6, 5.7 | - 源库DDL操作不支持（新建表、修改表结构、创建索引） |
+| SQL Server | 支持的数据库版本有：2008, 2012, 2016 | - 源库DDL操作不支持（新建表、修改表结构、创建索引） |
+| Sybase | 支持的数据库版本有：15.7 ASE | - 源库DDL操作不支持（新建表、修改表结构、创建索引） |
+| MongoDB | 支持的数据库版本有：3.6, 4.0, 4.2 | 源库同步到MongoDB时，不支持数组中再嵌套一层数组的结构 |
 
 
 - 具备数据源为数据库的数据采集能力
