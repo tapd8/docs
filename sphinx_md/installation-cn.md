@@ -102,7 +102,7 @@ Does MongoDB require username/password?((y/n))
 ```
 Please enter mongodb connection string without username and password (Default: mongodb://127.0.0.1:27017/tapdata)
 ```
-输入中间库的连接字符串，如果是开启认证，连接字符串为：`mongodb://<account>:<password>@127.0.0.1:27017/tapdata?authSource=admin`
+输入中间库的连接字符串，如果是开启认证，连接字符串为：`mongodb://127.0.0.1:27017/tapdata?authSource=admin`
 
 然后，您可以输入默认用户名 `admin@admin.com` 密码：`admin` ）。
 
