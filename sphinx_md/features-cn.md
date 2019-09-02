@@ -56,9 +56,11 @@
 
 # 产品限制
 
-- 源库 DDL 操作不支持（新建表、修改表结构、创建索引）
+- 源端关系型数据库 DDL 操作不支持（新建表、修改表结构、创建索引）
 - Oracle 10g 版本不支持增量同步
+- 不支持 Oracle 到 Oracle 的多表合并
 - Oracle 不支持的数据种类：
+  - Oracle timestamp 精度为微秒，MongoDB 时间精度为毫秒
   - INTERVAL YEAR TO MONTH
   - INTERVAL DAY TO SECOND
   - RAW
@@ -71,7 +73,7 @@
 - Oracle 不支持的数据库引擎：
   - Tables using table compression 
 - 源库同步到 MongoDB 时，不支持数组中再嵌套一层数组的结构
-- 不支持Windows共享目录
+- 同步文件到GridFS（MongoDB的一种）不支持Windows共享目录
 - 不支持多个sheet，及合并单元格等复杂格式
 - 不支持带属性的XML
 - 不具备聚合查询能力
