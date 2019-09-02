@@ -58,6 +58,7 @@
 
 - 源端关系型数据库 DDL 操作不支持（新建表、修改表结构、创建索引）
 - Oracle 10g 版本不支持增量同步
+- 不支持 Oracle 到 Oracle 的多表合并
 - Oracle 不支持的数据种类：
   - Oracle timestamp 精度为微秒，MongoDB 时间精度为毫秒
   - INTERVAL YEAR TO MONTH
