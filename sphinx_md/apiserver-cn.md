@@ -167,15 +167,28 @@ API 权限控制是基于 Tapdata 角色实现。管理员可以为每一个 API
 
 ## 5. 自主接入
 
-开发者可以自己编写 API 客户端实现，也可以下载 SDK 直接使用。自主对接流程如下：
+开发者可以自己编写 API 客户端实现，也可以下载 SDK 直接使用。
 
-![](../images/apiserver-cn-11.png)​​
+假设您已经本地安装部署，并发布了 Logs API，接口请求地址如下：
+
+|  | 请求方法 | 请求地址 | 说明 |
+| ------ | ------ | ------ | -------- |
+| 管理端 | GET | http://127.0.0.1:3030 | 后台管理登录地址 |
+| 认证服务器 | GET | http://127.0.0.1:3030/oauth/token | 换取令牌接口 |
+| 认证服务器 | GET | http://127.0.0.1:3030/oauth/authorize | 用户认证接口 |
+| API Server | POST | http://127.0.0.1:3080/api/v1/Logs | 新增记录 |
+| API Server | GET | http://127.0.0.1:3080/api/v1/Logs | 分页查询 |
+| API Server | PATCH | http://127.0.0.1:3080/api/v1/Logs/{id} | 部分字段更新 |
+| API Server | GET | http://127.0.0.1:3080/api/v1/Logs/{id} | 根据ID查询记录 |
+| API Server | DELETE | http://127.0.0.1:3080/api/v1/Logs/{id} | 根据ID删除记录 |
 
 ### 5.1 获取 API 接口访问令牌
 
 API 认证服务是基于 OAuth2.0 实现，默认支持 client credentials、implicit 授权方式，客户端可以按需选择合适的授权方式获取授权
 
 #### 5.1.1 获取 API 访问令牌(client credentials)
+
+![](../images/apiserver-cn-10.png)​​
 
 - 请求地址
 
@@ -197,10 +210,15 @@ API 认证服务是基于 OAuth2.0 实现，默认支持 client credentials、im
 | :-------- | :-------- | :------ | :------ |
 | access_token | string | 必须 | 访问 API Server 的令牌 |
 | expires_in  | string | 必须 | 过期时间 |
-| refresh_token | string | 可选 |  |
+| refresh_token | string | 可选 | 使用 refresh_token 更新 access_token |
 | token_type | string | 可选 | API Server 令牌认证方式，默认为Bearer |
 
-#### 5.1.2 携带访问令牌调用API
+
+#### 5.1.2 获取 API 访问令牌( implicit )
+
+
+
+#### 5.1.3 携带访问令牌调用API
 
 客户端每次调用发布的接口都需要提供 access_token 完成鉴权认证。发送请求时，可以将 access_token 放在请求头、请求体或URL参数中；也可以使用 Bearer 方式将 access_token 添加认证请求头信息中，无论使用那种方式，API Server 都会自动获取并完成权限验证。
 
@@ -382,6 +400,10 @@ API 认证服务是基于 OAuth2.0 实现，默认支持 client credentials、im
 
 ```
 filter[fields][propertyName]=<true|false>&filter[fields][propertyName]=<true|false>...
+
+OR
+
+filter={"fields":{"propertyName1":<true|false>,"propertyName2":<true|false>,...}}
 ```
 
 默认情况下，查询返回结果中包含数据模型的所有属性。如果您指定了至少一个字段过滤器的值为 true，那么查询返回结果中将仅包含您专门指定包含的那些字段。
@@ -392,6 +414,10 @@ filter[fields][propertyName]=<true|false>&filter[fields][propertyName]=<true|fal
 
 ```
 ?filter[fields][level]=true&filter[fields][message]=true&filter[fields][date]=true
+
+OR
+
+?filter={"fields":{"level":true,"message":true,"date":true}}
 ```
 
 返回的结果：
@@ -416,6 +442,10 @@ filter[fields][propertyName]=<true|false>&filter[fields][propertyName]=<true|fal
 
 ```
 filter[limit]=n
+
+OR
+
+filter={"limit":n}
 ```
 
 **例子**
@@ -424,6 +454,10 @@ filter[limit]=n
 
 ```
 ?filter[limit]=10
+
+OR
+
+?filter={"limit":10}
 ```
 
 ### 6.3 跳过指定记录数过滤器(skip filter)
@@ -432,6 +466,10 @@ filter[limit]=n
 
 ```
 filter[skip]=n
+
+OR
+
+filter={"skip":n}
 ```
 
 **例子**
@@ -440,6 +478,10 @@ filter[skip]=n
 
 ```
 ?filter[skip]=10
+
+OR
+
+?filter{"skip":10}
 ```
 
 **分页查询例子：**
@@ -448,6 +490,10 @@ filter[skip]=n
 
 ```
 ?filter[limit]=10&filter[skip]=50
+
+OR
+
+?filter={"limit":10,"skip"=50}
 ```
 
 ### 6.4 查询条件过滤器(where filter)
@@ -462,6 +508,12 @@ where filter 通常有两种写法，在下面的第一种写法，表示 指定
 ?filter[where][property]=value
 
 ?filter[where][property][operator]=value
+
+OR
+
+?filter={"where":{"property":value}}
+
+?filter={"where":{"property":{"operator":value}}}
 ```
 
 - property: 数据模型中的属性名称
@@ -486,54 +538,90 @@ where filter 通常有两种写法，在下面的第一种写法，表示 指定
 
 ```
 filter[where][<and|or>][0]condition1&filter[where][<and|or>][1]condition2...
+
+OR
+
+filter={"where":{"<and|or>":[condition1,condition2,...]}}
 ```
 
 例一，查询 api-server 程序的 INFO 日志：
 
 ```
 ?filter[where][and][0][level]=INFO&filter[where][and][1][loggerName]=api-server
+
+OR
+
+?filter={"where":{"and":[{"level":"INFO","loggerName":"api-server"}]}}
 ```
 
 例二，查询 api-server 程序的 INFO 日志和 tapdata-managent 程序的 ERROR 日志：
 
 ```
 ?filter[where][or][0][and][0][level]=ERROR&filter[where][or][0][and][1][loggerName]=tapdata-managent&filter[where][or][1][and][0][level]=INFO&filter[where][or][1][and][1][loggerName]=api-server
+
+OR
+
+?filter={"where":{"or":[{"and":[{"level":"ERROR"},{"loggerName":"tapdata-managent"}]},{"and":[{"level":"INFO"},{"loggerName":"api-server"}]}]}}
 ```
 
 #### 6.4.3 gt / gte / lt / lte / like / nlike / regexp 操作符
 
 ```
 filter[where][property][operator]=value
+
+OR
+
+filter={"where":{"property":{"operator":value}}}
 ```
 
 例一，查询日志时间大于指定日期的日志：
 
 ```
 ?filter[where][date][gte]=2019-07-18T10:26:00.000Z
+
+OR
+
+?filter={"where":{"date":{"gte":"2019-07-18T10:26:00.000Z"}}}
 ```
 
-注：日期格式为
+注：日期格式为有时区的标准时间格式（[ISO 8601](https://www.w3.org/TR/NOTE-datetime)）
 
 例二，正则表达式匹配 message ：
 
 ```
 ?filter[where][message][regexp]=LogsController.*findPage
+
+OR
+
+filter={"where":{"message":{"regexp":"LogsController.*findPage"}}}
 ```
 
 #### 6.4.4 inq / nin 操作符号
 
 ```
 filter[where][property][<inq | nin>][0]=value1&filter[where][property][<inq | nin>][1]=value2...
+
+OR
+
+filter={"where":{"property":{"<inq|nin>":[value1,value2]}}}
 ```
 
 #### 6.4.5 between 操作符号
 
 ```
-filter[where][property][<inq | nin>][0]=value1&filter[where][property][<inq | nin>][1]=value2...
+filter[where][property][between][0]=value1&filter[where][property][between][1]=value2...
+
+OR
+
+filter={"where":{"property":{"between":[value1,value2]}}}
 ```
 
 例一，查询日期在 2019-07-01 到 2019-07-02 之间的日志
 
 ```
 ?filter[where][date][between][0]=2019-07-01T00:00:00.000Z&filter[where][date][between][1]=2019-07-02T00:00:00.000Z
+
+OR
+
+filter={"where":{"date":{"between":["2019-07-01T00:00:00.000Z","2019-07-02T00:00:00.000Z"]}}}
 ```
