@@ -188,7 +188,7 @@ API 认证服务是基于 OAuth2.0 实现，默认支持 client credentials、im
 
 #### 5.1.1 获取 API 访问令牌(client credentials)
 
-![](../images/apiserver-cn-10.png)​​
+![](../images/apiserver-cn-11.png)​​
 
 - 请求地址
 
@@ -215,6 +215,31 @@ API 认证服务是基于 OAuth2.0 实现，默认支持 client credentials、im
 
 
 #### 5.1.2 获取 API 访问令牌( implicit )
+
+![](../images/apiserver-cn-12.png)​​
+
+- 请求地址
+	```
+	http://127.0.0.1:3030/oauth/authorize
+	```
+- 请求参数
+
+| 名称 | 类型 | 是否必填 | 说明 |
+| -------- | -------- | ------ | ------ |
+| grant_type | string | 必须 | 固定值：implicit |
+| client_id  | string | 必须 | 注册客户端时拿到的客户端ID |
+| response_type | string | 必须 | 固定值：token |
+| scope | string | 可选 | 本次请求认证要访问的接口 |
+| redirect_uri | string | 可选 | 授权后的跳转地址  |
+
+- 响应参数
+
+| 名称 | 类型 | 是否必填 | 说明 |
+| :-------- | :-------- | :------ | :------ |
+| access_token | string | 必须 | 访问 API Server 的令牌 |
+| expires_in  | string | 必须 | 过期时间 |
+| refresh_token | string | 可选 | 使用 refresh_token 更新 access_token |
+| token_type | string | 可选 | API Server 令牌认证方式，默认为Bearer |
 
 
 
