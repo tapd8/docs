@@ -69,8 +69,13 @@
   - XMLTYPE
   - Collections (nested tables and VARRAYs)
   - Simple and nested abstract datatypes (ADTs)
-- Oracle 不支持的数据库引擎：
+- Oracle 不支持的表属性：
   - Tables using table compression 
+- Oracle 其它限制：
+  - 不支持连接到CDB。
+  - 空的 BLOB/CLOB 字段会在目标端映射为NULL。
+  - 不支持对Primary Key的Update操作。
+  - CDC不支持动态视图。
 - 源库同步到 MongoDB 时，不支持数组中再嵌套一层数组的结构
 - 不支持带属性的XML
 - 不具备聚合查询能力
