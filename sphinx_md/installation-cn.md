@@ -122,20 +122,3 @@ http://您的服务器:3030/
 | Tapdata 数据采集器 | 无 | 所在的服务器能够访问到所有源端数据库 |
 | Tapdata API Server | 3080(默认) | 允许访问，能够被 Tapdata Portal 访问到 |
 | Tapdata Portal | 3030(默认) | 允许访问，能够被 Tapdata API Server 访问到 |
-
-## 4. Docker版本安装
-
-1. 假设您已经下载了 Tapdata 的 docker 镜像（tapdata-image.tar）
-
-
-2. 执行以下命令加载 docker 镜像：
-
-```
-docker load < /home/tapdata-image-name.tar
-```
-
-3. 使用以下命令启动 docker 镜像：
-
-```
-docker run -itd -p 80:80 tapdata:xxx.xxx.xx
-```
