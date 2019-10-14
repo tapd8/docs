@@ -181,10 +181,6 @@ Oracle 实时同步基于Oracle Redo Log，因此需要提前执行某些配置�
 CREATE USER <user name> IDENTIFIED BY <password>;
 GRANT create session, alter session, execute_catalog_role, select any dictionary, select any transaction, select any 
 table to <user name>;
-GRANT select on v_$logmnr_parameters to <user name>;
-GRANT select on v_$logmnr_logs to <user name>;
-GRANT select on v_$archived_log to <user name>; 
-GRANT select on <db>.<table> TO <user name>;
 ``` 
 
 ### 2.4 Oracle 12C 的特殊配置方法
@@ -245,7 +241,6 @@ ALTER SYSTEM SWITCH LOGFILE;
         CREATE USER <user name> IDENTIFIED BY <password> CONTAINER=all;
         GRANT create session, alter session, set container, select any dictionary, select any transaction, logmining, execute_catalog_role TO <username> CONTAINER=all;
         ALTER SESSION SET CONTAINER=<pdb>;     
-        GRANT select on <db>.<table> TO <user name>;
         ```
         根据您对表的权限需求，重复执行最后一个命令来赋予 select 权限。
 - 当您配置的是源库连接时，请使用此用户来通过 JDBC 的身份验证。 注意必须使用整个用户名（包括“c ##”）作为JDBC连接的用户名。
@@ -258,7 +253,6 @@ ALTER SYSTEM SWITCH LOGFILE;
     ```
     CREATE USER <user name> IDENTIFIED BY <password>;
     GRANT create session, alter session, select any dictionary, select any transaction, logmining, execute_catalog_role TO <username>;
-    GRANT select on <db>.<table> TO <user name>;
     ```
     根据您对表的权限需求，重复执行最后一个命令来赋予select权限。
 
