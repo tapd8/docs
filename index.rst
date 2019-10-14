@@ -10,8 +10,8 @@
    :maxdepth: 2
 
    sphinx_md/dochome-cn.md
-   sphinx_md/features-cn.md
    sphinx_md/installation-cn.md
+   sphinx_md/quick-start-cn.md
    sphinx_md/connection-config-cn.md
    sphinx_md/jobs-config-cn.md
    sphinx_md/apiserver-cn.md
