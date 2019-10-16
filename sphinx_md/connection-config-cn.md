@@ -309,6 +309,11 @@ select resource_name, limit from dba_profiles where profile=( select profile fro
 
 输出的结果中，format value 应该是"ROW"
 
+4. 给 tapdata 账号授权
+
+    ```
+    GRANT SELECT, RELOAD, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON . TO 'tapdata' IDENTIFIED BY 'password';
+    ```
 
 
 ## 4. SQL Server 配置
