@@ -42,7 +42,7 @@ MongoDB 3.2, 3.4, 3.6, 4.0
 }
 ```
 
-如果您不希望授予 **readAnyDatabase** 角色，则还可以向特定的数据库以及 "local" 数据库赋予读取权限。例如：
+如果您不希望授予 **readAnyDatabase** 角色，则还可以向特定的数据库以及 "local"和"config" 数据库赋予读取权限。例如：
 ```
 > use admin
 > db.createUser({            
@@ -60,6 +60,10 @@ MongoDB 3.2, 3.4, 3.6, 4.0
         {
             "role" : "read",
             "db" : "local"
+        },
+        {
+            "role" : "read",
+            "db" : "config"
         }
     ]
 }
@@ -142,7 +146,21 @@ MongoDB 3.2, 3.4, 3.6, 4.0
 
 [MongoDB Documentation: 如何清理孤儿文档](https://docs.mongodb.com/manual/reference/command/cleanupOrphaned/)
 
+### 1.4 MongoDB TLS/SSL配置
 
+**1. 启用TLS/SSL**
+
+![mongodb-ssl-enable](../images/mongodb-ssl-enable.png)
+
+**2. 设置MongoDB PemKeyFile**
+
+点击SELECT FILE，选择证书文件，若证书文件有密码保护，则在Private Key password中填入密码
+
+![mongodb-ssl-pemkey](../images/mongodb-ssl-pemkey.png)
+
+**3. 设置CAFile**
+
+![mongodb-ssl-cafile](../images/mongodb-ssl-cafile.png)
 
 ## 2. Oracle配置
 
