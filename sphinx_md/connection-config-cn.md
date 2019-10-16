@@ -325,7 +325,7 @@ select resource_name, limit from dba_profiles where profile=( select profile fro
     show variables like 'binlog_format';
     ```
 
-输出的结果中，format value 应该是"ROW"
+    输出的结果中，format value 应该是"ROW"
 
 4. 给 tapdata 账号授权
 
