@@ -327,6 +327,7 @@ select resource_name, limit from dba_profiles where profile=( select profile fro
 
     输出的结果中，format value 应该是"ROW"
 
+
 4. 给 tapdata 账号授权
 
     ```
