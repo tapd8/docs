@@ -694,6 +694,8 @@ PostgreSQL的逻辑解码功能最早出现在9.4版本中，它是一种机制�
 
 所以，根据以上，我们需要安装逻辑解码器，现有提供的解码器如下
 
+<span id="plugins">
+
 |解码器|pg版本|tapdata是否支持|输出格式|
 |:-:|:-:|:-:|:-:|
 |[decoderbufs](https://github.com/debezium/postgres-decoderbufs)|9.6+|✔️|protobuf|
@@ -770,25 +772,88 @@ host    replication     <youruser>  ::1/128            trust
 
 以上只是基本权限的设置，实际场景可能更加复杂
 
-#### 8.1.6 异常处理
+#### 8.1.6 测试日志插件是否可用
+
+**以下操作建议在POC环境进行**
+
+- 连接postgres数据库，切换至需要同步的数据库，创建一张测试表
+
+	```
+	// 假设需要同步的数据库为postgres，模型为public
+	\c postgres
+	
+	create table public.test_decode
+	(
+	    uid    integer not null
+	        constraint users_pk
+	            primary key,
+	    name   varchar(50),
+	    age    integer,
+	    score  decimal
+	)
+	```
+
+可以根据自己情况创建一张测试表
+
+- 创建slot连接，以[wal2json](#plugins)插件为例
+
+
+	```
+	select * from pg_create_logical_replication_slot('slot_test', 'wal2json')
+	```
+
+- 创建成功后，对测试表插入一条数据
+
+
+- 监听日志，查看返回结果，是否有刚才插入操作的信息
+
+	```
+	select * from pg_logical_slot_peek_changes('slot_test', null, null)
+	```
+	
+- 成功后，销毁slot连接，删除测试表
+
+	```
+	select * from pg_drop_replication_slot('slot_test')
+	
+	drop table public.test_decode
+	```
+
+#### 8.1.7 创建连接
+
+1. 数据库类型：PostgreSQL
+2. 连接类型：源头/源头和目标
+3. 填写数据库连接信息
+![](../images/postgres-config-1.png)
+4. 选择日志解码器
+
+	- decoderbufs: [decoderbufs插件](#plugins)
+	- json streaming: [wal2json插件](#plugins)*(默认项)*
+	- json streaming on rds: [wal2json插件，用于云rds服务](#plugins)
+	- pgoutput: [pgoutput插件](#plugins)
+
+
+#### 8.1.8 异常处理
 
 ##### Slot清理
 
-如果tapdata由于不可控异常（断电、内存穿透等），导致cdc中断，会导致slot连接无法正确从pg主节点删除，将一直占用一个slot连接名额，需手动登录主节点，进行删除
+如果tapdata由于不可控异常（断电、进程崩溃等），导致cdc中断，会导致slot连接无法正确从pg主节点删除，将一直占用一个slot连接名额，需手动登录主节点，进行删除
 
 1. 查询slot信息
 
-```
-TABLE pg_replication_slots;
-```
-
-查看是否有slot_name=tapdata的信息
+	```
+	// 查看是否有slot_name=tapdata的信息
+	
+	TABLE pg_replication_slots;
+	```
+	如图
+	![](../images/postgres-config-2.png)
 
 2. 删除slot节点
 
-```
-select * from pg_drop_replication_slot('tapdata');
-```
+	```
+	select * from pg_drop_replication_slot('tapdata');
+	```
 
 ##### 删除操作
 
