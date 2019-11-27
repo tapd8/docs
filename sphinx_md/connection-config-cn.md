@@ -698,9 +698,9 @@ PostgreSQL的逻辑解码功能最早出现在9.4版本中，它是一种机制�
 
 |解码器|pg版本|tapdata是否支持|输出格式|
 |:-:|:-:|:-:|:-:|
-|[decoderbufs](https://github.com/debezium/postgres-decoderbufs)|9.6+|✔️|protobuf|
+|[decoderbufs](https://github.com/debezium/postgres-decoderbufs)|9.6+|❌|protobuf|
 |[wal2json](https://github.com/eulerto/wal2json)|9.4+|✔️|json|
-|pgoutput|10.0+|✔️|pg log|
+|pgoutput|10.0+|❌️|pg log|
 |test_decoding|9.4+|❌|text|
 |decoder_raw|9.4+|❌|SQL|
 
@@ -827,7 +827,6 @@ host    replication     <youruser>  ::1/128            trust
 ![](../images/postgres-config-1.png)
 4. 选择日志解码器
 
-	- decoderbufs: [decoderbufs插件](#plugins)
 	- json streaming: [wal2json插件](#plugins)*(默认项)*
 	- json streaming on rds: [wal2json插件，用于云rds服务](#plugins)
 	- pgoutput: [pgoutput插件](#plugins)
